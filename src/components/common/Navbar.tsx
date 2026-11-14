@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+ import { NavLink } from "react-router";
 import Logo from "../../assets/Logo_para_Streamax.png";
 
 const Navbar = () => {
@@ -29,6 +29,10 @@ const Navbar = () => {
             />
             <NavLink to={"/Login"} className="text-amber-50">
               Iniciar sesion
+            </NavLink>
+            <NavLink to={"/Register"} className="text-amber-50">
+              Registrarse
+
             </NavLink>
           </div>
         </div>
