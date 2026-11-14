@@ -1,65 +1,34 @@
 
-const footerSections = [
-  {
-    title: "EXPLORAR",
-    links: [
-      { label: "Inicio", href: "/" },
-      { label: "Explorar", href: "/explorar" },
-      { label: "Mi Lista", href: "/mi-lista" },
-      { label: "Novedades", href: "/novedades" },
-    ],
-  },
-  {
-    title: "CUENTA / PLANES",
-    links: [
-      { label: "Planes y Tarifas", href: "/planes" },
-      { label: "Canjear Código", href: "/canjear-codigo" },
-      { label: "Métodos de Pago", href: "/metodos-de-pago" },
-      { label: "Configuración", href: "/configuracion" },
-    ],
-  },
-  {
-    title: "LEGAL & SOPORTE",
-    links: [
-      { label: "Términos de Uso", href: "/terminos" },
-      { label: "Privacidad", href: "/privacidad" },
-      { label: "Centro de Ayuda", href: "/ayuda" },
-      { label: "Contacto", href: "/contacto" },
-    ],
-  },
-];
+import { NavLink } from "react-router";
+import {
+  FaEnvelope,
+  FaWhatsapp,
+  FaInstagram,
+  FaFacebook,
+  FaLinkedin,
+  FaYoutube,
+  FaGithub,
+} from "react-icons/fa";
 
-const socialLinks = [
-  { label: "GitHub", href: "https://github.com" },
-  { label: "X / Twitter", href: "https://x.com" },
-  { label: "Instagram", href: "https://instagram.com" },
-  { label: "YouTube", href: "https://youtube.com" },
-  { label: "Discord", href: "https://discord.com" },
-];
+import Logo from "../../assets/Logo_para_Streamax.png";
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t border-border bg-background text-text-primary">
+    <footer className="w-full border-t border-gray-800 bg-[#101014] text-white">
 
+      {/* Contenido principal */}
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-12">
 
-        <div className="flex flex-col gap-4">
+        {/* Logo y descripción */}
+        <div className="flex flex-col gap-3">
 
-          <a
-            href="/"
-            className="flex w-fit items-center gap-3"
-            aria-label="Streamax - Inicio"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary bg-surface shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-              <span className="text-lg font-black text-primary">
-                S
-              </span>
-            </div>
-
-            <span className="text-2xl font-extrabold tracking-wide">
-              STREAMAX
-            </span>
-          </a>
+          <NavLink to={"/"} className="w-fit">
+            <img
+              src={Logo}
+              alt="Streamax"
+              className="h-15 w-auto object-contain"
+            />
+          </NavLink>
 
           <p className="max-w-md text-sm leading-relaxed text-text-secondary">
             Tu plataforma definitiva de streaming en ultra alta
@@ -67,53 +36,204 @@ const Footer = () => {
           </p>
 
         </div>
-        {footerSections.map((section) => (
-          <div key={section.title} className="flex flex-col gap-3">
 
-            <h3 className="text-sm font-bold tracking-wide text-text-primary">
-              {section.title}
-            </h3>
+        {/* Explorar */}
+        <div className="flex flex-col gap-3">
 
-            <ul className="flex flex-col gap-2">
-              {section.links.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="w-fit text-sm text-text-secondary transition-colors duration-200 hover:text-primary"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          <h3 className="text-sm font-bold tracking-wide">
+            EXPLORAR
+          </h3>
+
+          <ul className="flex flex-col gap-2 text-sm text-gray-400">
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Inicio
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Explorar
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Mi Lista
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Novedades
+              </NavLink>
+            </li>
+
+          </ul>
+        </div>
+
+        {/* Cuenta y planes */}
+        <div className="flex flex-col gap-3">
+
+          <h3 className="text-sm font-bold tracking-wide">
+            CUENTA / PLANES
+          </h3>
+
+          <ul className="flex flex-col gap-2 text-sm text-gray-400">
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Planes y Tarifas
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Canjear Código
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Métodos de Pago
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Configuración
+              </NavLink>
+            </li>
+
+          </ul>
+        </div>
+
+        {/* Legal y soporte */}
+        <div className="flex flex-col gap-3">
+
+          <h3 className="text-sm font-bold tracking-wide">
+            LEGAL & SOPORTE
+          </h3>
+
+          <ul className="flex flex-col gap-2 text-sm text-gray-400">
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Términos de Uso
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Privacidad
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Centro de Ayuda
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to={"/error404"} className="transition hover:text-blue-400">
+                Contacto
+              </NavLink>
+            </li>
+
+          </ul>
+        </div>
 
       </div>
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 border-t border-border px-6 py-5 sm:flex-row">
 
-        <p className="text-center text-xs font-medium text-text-secondary sm:text-left">
+      {/* Barra inferior */}
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 border-t border-gray-800 px-6 py-5 sm:flex-row">
+
+        {/* Copyright */}
+        <p className="text-center text-xs font-medium text-gray-500 sm:text-left">
           © 2025 Streamax. Todos los derechos reservados.
         </p>
 
-        <nav aria-label="Redes sociales">
-          <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+        {/* Redes y contacto */}
+        <div className="flex items-center gap-5">
 
-            {socialLinks.map((social) => (
-              <li key={social.label}>
-                <a
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-semibold text-text-secondary transition-colors duration-200 hover:text-primary"
-                >
-                  {social.label}
-                </a>
-              </li>
-            ))}
+          <a
+            href="mailto:academy@rollingcodeschool.com"
+            aria-label="Email"
+            title="Email"
+            className="text-gray-400 transition hover:text-blue-400"
+          >
+            <FaEnvelope size={19} />
+          </a>
 
-          </ul>
-        </nav>
+          <a
+            href="https://wa.me/5493815783030"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            title="WhatsApp"
+            className="text-gray-400 transition hover:text-green-500"
+          >
+            <FaWhatsapp size={19} />
+          </a>
+
+          <a
+            href="https://www.instagram.com/rollingcodeschool/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            title="Instagram"
+            className="text-gray-400 transition hover:text-pink-500"
+          >
+            <FaInstagram size={19} />
+          </a>
+
+          <a
+            href="https://www.facebook.com/RollingCodeSchool"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            title="Facebook"
+            className="text-gray-400 transition hover:text-blue-500"
+          >
+            <FaFacebook size={19} />
+          </a>
+
+          <a
+            href="https://www.linkedin.com/school/rollingcodeschool/posts/?feedView=all"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            title="LinkedIn"
+            className="text-gray-400 transition hover:text-blue-400"
+          >
+            <FaLinkedin size={19} />
+          </a>
+
+          <a
+            href="https://www.youtube.com/@rollingcode7175"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+            title="YouTube"
+            className="text-gray-400 transition hover:text-red-500"
+          >
+            <FaYoutube size={19} />
+          </a>
+
+          <a
+            href="https://github.com/luciollanos1234-eng/Streamax/pulls"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            title="GitHub del proyecto"
+            className="text-gray-400 transition hover:text-white"
+          >
+            <FaGithub size={19} />
+          </a>
+
+        </div>
 
       </div>
 
