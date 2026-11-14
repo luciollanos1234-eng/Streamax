@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <header className="bg-black">
       <nav>
-        <div className="flex items-center gap-4 ml-2">
+        <div className="ml-auto mr-2 flex items-center gap-4">
           <NavLink to={"/"}>
             <img src={Logo} alt="Streamax" className="h-15" />
           </NavLink>
@@ -18,6 +18,10 @@ const Navbar = () => {
           <NavLink to={""} className="text-amber-50">
             Mi lista
           </NavLink>
+          <input type="search"
+          placeholder="Buscar peliculas..."
+          aria-label="Buscar peliculas"
+          className="w-60 rounded-md bg-gray-800 px-3 py-2  text-amber-50"/>
         </div>
       </nav>
     </header>
