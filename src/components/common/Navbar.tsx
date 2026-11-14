@@ -1,13 +1,16 @@
+import { NavLink } from "react-router"
+import Logo from "../../assets/Logo_para_Streamax.png"
 
 
 const Navbar = () => {
   return (
-    <header>
+    <header className="bg-black">
         <nav className="flex flex-wrap items-center justify-between p-3">
             <div>
-                <h1 className="text-2xl">
-                    Streamax
-                </h1>
+                <NavLink to={'/'}>
+                <img src={Logo} alt="Streamax" className="h-15"/>
+                </NavLink>
+                
             </div>
         </nav>
     </header>
