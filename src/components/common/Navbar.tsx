@@ -1,26 +1,48 @@
-import { useState } from "react";
-import { NavLink } from "react-router";
-import Logo from "../../assets/Logo_para_Streamax.png";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router";
 import { IoSearch } from "react-icons/io5";
+import Logo from "../../assets/Logo_para_Streamax.png";
+import {
+  AUTH_CHANGE_EVENT,
+  getCurrentUser,
+  setCurrentUser,
+} from "../../services/storageService";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [busqueda, setBusqueda] = useState("");
+  const [usuario, setUsuario] = useState(getCurrentUser());
+
+  useEffect(() => {
+    const syncUser = () => setUsuario(getCurrentUser());
+    window.addEventListener("storage", syncUser);
+    window.addEventListener(AUTH_CHANGE_EVENT, syncUser);
+    return () => {
+      window.removeEventListener("storage", syncUser);
+      window.removeEventListener(AUTH_CHANGE_EVENT, syncUser);
+    };
+  }, []);
+
+  const cerrarSesion = () => {
+    setCurrentUser(null);
+    navigate("/");
+  };
 
   return (
     <header className="bg-black">
       <nav>
         <div className="ml-auto flex items-center justify-between p-3">
           <div className="flex items-center gap-6">
-            <NavLink to={"/"}>
+            <NavLink to="/">
               <img src={Logo} alt="Streamax" className="h-15 scale-150" />
             </NavLink>
-            <NavLink to={"/"} className="text-amber-50">
-              inicio
+            <NavLink to="/" className="text-amber-50">
+              Inicio
             </NavLink>
-            <NavLink to={""} className="text-amber-50">
+            <NavLink to="/" className="text-amber-50">
               Explorar
             </NavLink>
-            <NavLink to={""} className="text-amber-50">
+            <NavLink to="/" className="text-amber-50">
               Mi lista
             </NavLink>
           </div>
@@ -41,20 +63,29 @@ const Navbar = () => {
                 className="w-60 rounded-md bg-gray-800 py-2 pl-10 pr-3 text-amber-50"
               />
             </div>
-            {/*  {usuario ? (
-              <button onClick={cerrarSesion} className="text-amber-50">
-                Cerrar sesion
-              </button>
+            {usuario ? (
+              <>
+                <span className="me-2 max-w-48 truncate text-sm text-slate-600 dark:text-slate-300">
+                  Hola "{usuario.name}"
+                </span>
+                <button
+                  type="button"
+                  className="w-max text-slate-700 hover:text-blue-600 dark:text-slate-200"
+                  onClick={cerrarSesion}
+                >
+                  Cerrar sesión
+                </button>
+              </>
             ) : (
               <>
-            <NavLink to={"/Login"} className="text-amber-50">
-              Iniciar sesion
-            </NavLink>
-            <NavLink to={"/Register"} className="text-amber-50">
-              Registrarse
-            </NavLink>
-            </>
-            )} */}
+                <NavLink to="/Login" className="text-amber-50">
+                  Iniciar sesión
+                </NavLink>
+                <NavLink to="/Register" className="text-amber-50">
+                  Registrarse
+                </NavLink>
+              </>
+            )}
           </div>
         </div>
       </nav>
