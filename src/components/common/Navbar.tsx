@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="ml-auto flex items-center justify-between p-3">
           <div className="flex items-center gap-6">
             <NavLink to={"/"}>
-              <img src={Logo} alt="Streamax" className="h-15" />
+              <img src={Logo} alt="Streamax" className="h-15 scale-150" />
             </NavLink>
             <NavLink to={"/"} className="text-amber-50">
               inicio
@@ -41,12 +41,20 @@ const Navbar = () => {
                 className="w-60 rounded-md bg-gray-800 py-2 pl-10 pr-3 text-amber-50"
               />
             </div>
+            {/*  {usuario ? (
+              <button onClick={cerrarSesion} className="text-amber-50">
+                Cerrar sesion
+              </button>
+            ) : (
+              <>
             <NavLink to={"/Login"} className="text-amber-50">
               Iniciar sesion
             </NavLink>
             <NavLink to={"/Register"} className="text-amber-50">
               Registrarse
             </NavLink>
+            </>
+            )} */}
           </div>
         </div>
       </nav>
