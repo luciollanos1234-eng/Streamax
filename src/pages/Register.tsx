@@ -83,7 +83,7 @@ const Register = () => {
     <section className="flex min-h-[70vh] items-center justify-center bg-[#0f172a] px-4 py-10 text-white">
       <div className="w-full max-w-md rounded-2xl border border-gray-700 bg-[#111827] p-8 shadow-xl">
         <div className="mb-6 text-center">
-          <img src={Logo} alt="Streamax" className="mx-auto h-15" />
+          <img src={Logo} alt="Streamax" className="mx-auto h-15 scale-150" />
           <h1 className="mt-2 text-3xl font-bold">Crear cuenta</h1>
           <p className="mt-2 text-sm text-gray-300">
             Registrate para disfrutar de Streamax.
@@ -107,13 +107,13 @@ const Register = () => {
             </>
           ) : (
             <>
-              <p>Primero elegí un plan para continuar con el registro.</p>
-              <NavLink
+             <NavLink
                 to="/planes"
-                className="mt-2 inline-block font-semibold text-amber-400 underline"
+                className="mt-2 inline-block font-bold text-amber-400 hover:text-amber-300"
               >
-                Ver planes
+              <p className="text-center">Primero elegí un plan para continuar con el registro, Ver planes.</p>
               </NavLink>
+              
             </>
           )}
         </div>
