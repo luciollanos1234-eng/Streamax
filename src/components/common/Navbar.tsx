@@ -45,6 +45,9 @@ const Navbar = () => {
             <NavLink to="/" className="text-amber-50">
               Mi lista
             </NavLink>
+            <NavLink to="/planes" className="text-amber-50">
+              Planes
+            </NavLink>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative">

@@ -1,7 +1,12 @@
 import { useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useNavigate, useSearchParams } from "react-router";
 import Swal from "sweetalert2";
-import { getRegisteredUsers, saveRegisteredUsers } from "../services/storageService";
+import {
+  getRegisteredUsers,
+  saveRegisteredUsers,
+} from "../services/storageService";
+import Logo from "../assets/Logo_para_Streamax.png";
+import { plans } from "../data/plans";
 
 type RegisterFormData = {
   name: string;
@@ -12,10 +17,13 @@ type RegisterFormData = {
 
 const Register = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const planId = searchParams.get("plan");
+  const selectedPlan = plans.find((plan) => plan.id === planId);
   const {
     register,
     handleSubmit,
-    watch,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     defaultValues: {
@@ -27,6 +35,16 @@ const Register = () => {
   });
 
   const onRegister = async (data: RegisterFormData) => {
+    if (!selectedPlan) {
+      await Swal.fire({
+        title: "Elegí un plan",
+        text: "Seleccioná una suscripción antes de crear tu cuenta.",
+        icon: "warning",
+      });
+      navigate("/planes");
+      return;
+    }
+
     const email = data.email.trim().toLowerCase();
     const alreadyRegistered = getRegisteredUsers().some(
       (user) => user.email.toLowerCase() === email,
@@ -47,6 +65,7 @@ const Register = () => {
       name: data.name.trim(),
       email,
       password: data.password,
+      planId: selectedPlan.id,
     });
 
     saveRegisteredUsers(users);
@@ -64,16 +83,50 @@ const Register = () => {
     <section className="flex min-h-[70vh] items-center justify-center bg-[#0f172a] px-4 py-10 text-white">
       <div className="w-full max-w-md rounded-2xl border border-gray-700 bg-[#111827] p-8 shadow-xl">
         <div className="mb-6 text-center">
-          <p className="text-sm uppercase tracking-[0.2em] text-amber-400">Streamax</p>
+          <img src={Logo} alt="Streamax" className="mx-auto h-15 scale-150" />
           <h1 className="mt-2 text-3xl font-bold">Crear cuenta</h1>
           <p className="mt-2 text-sm text-gray-300">
-            Registrate para disfrutar del catálogo premium.
+            Registrate para disfrutar de Streamax.
           </p>
         </div>
-
-        <form noValidate onSubmit={handleSubmit(onRegister)} className="space-y-5">
+        <div className="mb-5 rounded-lg border border-gray-700 bg-gray-800 p-4 text-sm">
+          {selectedPlan ? (
+            <>
+              <p>
+                Plan elegido:{" "}
+                <span className="font-semibold text-amber-400">
+                  {selectedPlan.name} ({selectedPlan.price})
+                </span>
+              </p>
+              <NavLink
+                to="/planes"
+                className="mt-2 inline-block text-amber-400 underline"
+              >
+                Cambiar plan
+              </NavLink>
+            </>
+          ) : (
+            <>
+             <NavLink
+                to="/planes"
+                className="mt-2 inline-block font-bold text-amber-400 hover:text-amber-300"
+              >
+              <p className="text-center">Primero elegí un plan para continuar con el registro, Ver planes.</p>
+              </NavLink>
+              
+            </>
+          )}
+        </div>
+        <form
+          noValidate
+          onSubmit={handleSubmit(onRegister)}
+          className="space-y-5"
+        >
           <div>
-            <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-200">
+            <label
+              htmlFor="name"
+              className="mb-1 block text-sm font-medium text-gray-200"
+            >
               Nombre
             </label>
             <input
@@ -90,11 +143,16 @@ const Register = () => {
                 },
               })}
             />
-            {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>}
+            {errors.name && (
+              <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
+            )}
           </div>
 
           <div>
-            <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-200">
+            <label
+              htmlFor="email"
+              className="mb-1 block text-sm font-medium text-gray-200"
+            >
               Correo electrónico
             </label>
             <input
@@ -111,11 +169,18 @@ const Register = () => {
                 },
               })}
             />
-            {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-400">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
-            <label htmlFor="password" className="mb-1 block text-sm font-medium text-gray-200">
+            <label
+              htmlFor="password"
+              className="mb-1 block text-sm font-medium text-gray-200"
+            >
               Contraseña
             </label>
             <input
@@ -133,12 +198,17 @@ const Register = () => {
               })}
             />
             {errors.password && (
-              <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
+              <p className="mt-1 text-sm text-red-400">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium text-gray-200">
+            <label
+              htmlFor="confirmPassword"
+              className="mb-1 block text-sm font-medium text-gray-200"
+            >
               Confirmar contraseña
             </label>
             <input
@@ -150,17 +220,20 @@ const Register = () => {
               {...register("confirmPassword", {
                 required: "Confirmar la contraseña es obligatorio.",
                 validate: (value) =>
-                  value === watch("password") || "Las contraseñas no coinciden.",
+                  value === getValues("password") ||
+                  "Las contraseñas no coinciden.",
               })}
             />
             {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-400">{errors.confirmPassword.message}</p>
+              <p className="mt-1 text-sm text-red-400">
+                {errors.confirmPassword.message}
+              </p>
             )}
           </div>
 
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !selectedPlan}
             className="w-full rounded-md bg-amber-500 px-4 py-2 font-semibold text-black transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isSubmitting ? "Creando cuenta..." : "Registrarme"}
@@ -169,7 +242,10 @@ const Register = () => {
 
         <p className="mt-5 text-center text-sm text-gray-300">
           ¿Ya tenés cuenta?{" "}
-          <NavLink to="/Login" className="font-semibold text-amber-400 hover:text-amber-300">
+          <NavLink
+            to="/Login"
+            className="font-semibold text-amber-400 hover:text-amber-300"
+          >
             Iniciar sesión
           </NavLink>
         </p>
