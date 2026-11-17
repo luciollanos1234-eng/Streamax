@@ -5,6 +5,7 @@ import NotFound from "../pages/NotFound";
 import Plans from "../pages/Plans";
 import Register from "../pages/Register";
 import Explorer from "../pages/Explorer";
+import MovieDetail from "../components/movies/MovieDetail";
 
 const AppRouter = () => (
   <Routes>
@@ -13,6 +14,7 @@ const AppRouter = () => (
     <Route path="/planes" element={<Plans />} />
     <Route path="/Register" element={<Register />} />
     <Route path="/explorer" element={<Explorer />} />
+    <Route path="/peliculas/:id" element={<MovieDetail />} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
