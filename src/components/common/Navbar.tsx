@@ -12,6 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [busqueda, setBusqueda] = useState("");
   const [usuario, setUsuario] = useState(getCurrentUser());
+  const [menuAbierto, setMenuAbierto] = useState(false);
 
   useEffect(() => {
     const syncUser = () => setUsuario(getCurrentUser());
@@ -31,26 +32,98 @@ const Navbar = () => {
   return (
     <header className="bg-black">
       <nav>
-        <div className="ml-auto flex items-center justify-between p-3">
-          <div className="flex items-center gap-6">
+        <div className="ml-auto flex flex-wrap items-center justify-between gap-4 p-3">
+          <div className="flex w-full flex-wrap items-center justify-between lg:w-auto lg:flex-nowrap lg:gap-6">
             <NavLink to="/">
-              <img src={Logo} alt="Streamax" className="h-15 scale-150" />
+              <img
+                src={Logo}
+                alt="Streamax"
+                className="h-15 scale-100 lg:scale-150"
+              />
             </NavLink>
-            <NavLink to="/" className="text-amber-50">
-              Inicio
-            </NavLink>
-            <NavLink to="/Explorer" className="text-amber-50">
-              Explorar
-            </NavLink>
-            <NavLink to="/" className="text-amber-50">
-              Mi lista
-            </NavLink>
-            <NavLink to="/planes" className="text-amber-50">
-              Planes
-            </NavLink>
+            <button
+              type="button"
+              className="flex flex-col gap-1.5 text-amber-50 lg:hidden"
+              aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={menuAbierto}
+              aria-controls="menu-principal"
+              onClick={() => setMenuAbierto(!menuAbierto)}
+            >
+              <span
+                aria-hidden="true"
+                className={`block h-0.5 w-6 bg-current transition-transform ${
+                  menuAbierto ? "translate-y-2 rotate-45" : ""
+                }`}
+              />
+              <span
+                aria-hidden="true"
+                className={`block h-0.5 w-6 bg-current transition-opacity ${
+                  menuAbierto ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                aria-hidden="true"
+                className={`block h-0.5 w-6 bg-current transition-transform ${
+                  menuAbierto ? "-translate-y-2 -rotate-45" : ""
+                }`}
+              />
+            </button>
+            <div
+              id="menu-principal"
+              className={`${
+                menuAbierto ? "flex" : "hidden"
+              } w-full flex-col gap-4 pt-4 lg:flex lg:w-auto lg:flex-row lg:pt-0`}
+            >
+              <NavLink
+                to="/"
+                className="text-amber-50"
+                onClick={() => setMenuAbierto(false)}
+              >
+                Inicio
+              </NavLink>
+              <NavLink
+                to="/Explorer"
+                className="text-amber-50"
+                onClick={() => setMenuAbierto(false)}
+              >
+                Explorar
+              </NavLink>
+              <NavLink
+                to="/"
+                className="text-amber-50"
+                onClick={() => setMenuAbierto(false)}
+              >
+                Mi lista
+              </NavLink>
+              <NavLink
+                to="/planes"
+                className="text-amber-50"
+                onClick={() => setMenuAbierto(false)}
+              >
+                Planes
+              </NavLink>
+              {!usuario && (
+                <>
+                  <NavLink
+                    to="/Login"
+                    className="text-amber-50 lg:hidden"
+                    onClick={() => setMenuAbierto(false)}
+                  >
+                    Iniciar sesión
+                  </NavLink>
+                  <NavLink
+                    to="/Register"
+                    className="text-amber-50 lg:hidden"
+                    onClick={() => setMenuAbierto(false)}
+                  >
+                    Registrarse
+                  </NavLink>
+                </>
+              )}
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="relative">
+          <div className="flex w-full flex-wrap items-center gap-4 lg:w-auto">
+            <div className="relative w-full sm:w-60">
               {busqueda === "" && (
                 <IoSearch
                   aria-hidden="true"
@@ -63,7 +136,7 @@ const Navbar = () => {
                 onChange={(e) => setBusqueda(e.target.value)}
                 placeholder="Buscar peliculas..."
                 aria-label="Buscar peliculas"
-                className="w-60 rounded-md bg-gray-800 py-2 pl-10 pr-3 text-amber-50"
+                className="w-full rounded-md bg-gray-800 py-2 pl-10 pr-3 text-amber-50"
               />
             </div>
             {usuario ? (
@@ -81,10 +154,13 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <NavLink to="/Login" className="text-amber-50">
+                <NavLink to="/Login" className="hidden text-amber-50 lg:inline">
                   Iniciar sesión
                 </NavLink>
-                <NavLink to="/Register" className="text-amber-50">
+                <NavLink
+                  to="/Register"
+                  className="hidden text-amber-50 lg:inline"
+                >
                   Registrarse
                 </NavLink>
               </>
